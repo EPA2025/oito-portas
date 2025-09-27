@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>O Ceifador - AR</title>
+  <title>O Ceifador – A Colheita Inacabada - AR</title>
 
   <!-- Scripts AR.js -->
   <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
@@ -58,7 +58,7 @@
   </style>
 </head>
 <body>
-  <!-- Caixa com a história e botão -->
+  <!-- Caixa de história com botão -->
   <div class="arjs-loader" id="loadingText">
     <div>
       <strong>O Ceifador – A Colheita Inacabada</strong><br><br>
@@ -87,7 +87,7 @@
       smoothThreshold="5"
     >
       <!-- Wrapper para posição e escala -->
-      <a-entity id="modelWrapper" position="0 -100 -900">
+      <a-entity id="modelWrapper" position="0 -50 -400">
         <a-entity
           id="ceifadorModel"
           gltf-model="https://juliamaciels.github.io/oito-portas/ceifador/modelos/ceifador.glb"
@@ -110,8 +110,14 @@
       // Esconde a caixa de história
       loader.style.display = 'none';
 
-      // Inicializa a câmera AR
-      scene.systems["arjs"].arToolkitSource.domElement.play();
+      // Inicializa manualmente o AR.js
+      const arjsSystem = scene.systems['arjs'];
+      arjsSystem.arToolkitSource.init(() => {
+        arjsSystem.arToolkitContext.init(() => {
+          // AR pronto para rastrear
+          console.log('AR iniciado!');
+        });
+      });
     });
   </script>
 </body>
