@@ -2,6 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Noiva 1 - AR</title>
 
   <!-- Scripts AR.js -->
@@ -47,9 +48,10 @@
     }
 
     #intro .content {
-      max-width: 700px;
+      width: 90%;              /* ocupa 90% da tela no celular */
+      max-width: 700px;        /* mas nunca passa de 700px em desktop */
       background: rgba(20, 20, 20, 0.95);
-      padding: 30px;
+      padding: 25px;
       border: 2px solid crimson;
       border-radius: 12px;
       text-align: center;
@@ -57,17 +59,18 @@
     }
 
     #intro h1 {
-      font-size: 2em;
-      margin-bottom: 20px;
+      font-size: 1.8em;
+      margin-bottom: 15px;
       color: crimson;
     }
 
     #intro p {
-      margin-bottom: 15px;
+      margin-bottom: 12px;
+      font-size: 1em;
     }
 
     #intro button {
-      margin-top: 20px;
+      margin-top: 15px;
       padding: 12px 24px;
       font-size: 1em;
       background: crimson;
@@ -75,6 +78,8 @@
       border: none;
       border-radius: 8px;
       cursor: pointer;
+      width: 100%;             /* botão ocupa toda largura no celular */
+      max-width: 250px;        /* mas limita no desktop */
     }
 
     #intro button:hover {
@@ -119,7 +124,7 @@
         gltf-model="https://juliamaciels.github.io/oito-portas/noiva1/modelos/noiva1.glb"
         scale="200 200 200"
         position="0 0 -400"
-        rotation="0 90 0"
+        rotation="0 -90 0"
       >
       </a-entity>
     </a-nft>
