@@ -42,44 +42,40 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      padding: 20px;
       font-family: "Georgia", serif;
-      overflow-y: auto;
     }
 
     #intro .content {
-      width: 90%;              /* ocupa 90% da tela no celular */
-      max-width: 700px;        /* mas nunca passa de 700px em desktop */
+      width: 85%;             /* um pouco menor no celular */
+      max-width: 600px;       /* limite em desktop */
       background: rgba(20, 20, 20, 0.95);
-      padding: 25px;
+      padding: 20px;
       border: 2px solid crimson;
       border-radius: 12px;
       text-align: center;
-      line-height: 1.6;
+      line-height: 1.5;
+      font-size: 0.95em;      /* texto mais compacto */
     }
 
     #intro h1 {
-      font-size: 1.8em;
+      font-size: 1.6em;
       margin-bottom: 15px;
       color: crimson;
     }
 
     #intro p {
       margin-bottom: 12px;
-      font-size: 1em;
     }
 
     #intro button {
       margin-top: 15px;
-      padding: 12px 24px;
+      padding: 10px 20px;
       font-size: 1em;
       background: crimson;
       color: white;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      width: 100%;             /* botão ocupa toda largura no celular */
-      max-width: 250px;        /* mas limita no desktop */
     }
 
     #intro button:hover {
