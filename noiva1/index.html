@@ -39,23 +39,30 @@
       color: white;
       z-index: 10000;
       display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       padding: 20px;
-      text-align: center;
       font-family: "Georgia", serif;
-      line-height: 1.6;
       overflow-y: auto;
+    }
+
+    #intro .content {
+      max-width: 700px;
+      background: rgba(20, 20, 20, 0.95);
+      padding: 30px;
+      border: 2px solid crimson;
+      border-radius: 12px;
+      text-align: center;
+      line-height: 1.6;
     }
 
     #intro h1 {
       font-size: 2em;
       margin-bottom: 20px;
+      color: crimson;
     }
 
     #intro p {
-      max-width: 700px;
       margin-bottom: 15px;
     }
 
@@ -63,7 +70,7 @@
       margin-top: 20px;
       padding: 12px 24px;
       font-size: 1em;
-      background: darkred;
+      background: crimson;
       color: white;
       border: none;
       border-radius: 8px;
@@ -71,20 +78,22 @@
     }
 
     #intro button:hover {
-      background: crimson;
+      background: darkred;
     }
   </style>
 </head>
 <body style="margin: 0; overflow: hidden;">
   <!-- Tela de introdução -->
   <div id="intro">
-    <h1>A Noiva do Poço</h1>
-    <p>Séculos atrás, uma jovem chamada Elira foi prometida em casamento a um homem cruel e poderoso, contra sua vontade. Na véspera da cerimônia, ela tentou fugir, mas foi capturada e levada de volta. Como punição, foi amarrada com seu vestido de noiva e lançada viva dentro de um poço profundo.</p>
-    <p>A água gelada sufocou seus gritos, mas sua fúria não morreu com ela. Dizem que, em noites silenciosas, o som de correntes arrastando ecoa do fundo do poço, e a figura de uma mulher surge, flutuando, com o vestido rasgado e encharcado, os cabelos desgrenhados e a pele cinzenta.</p>
-    <p>Elira não busca apenas vingança contra quem a matou — ela arrasta qualquer um que se aproxime do poço para o fundo, onde suas mãos frias seguram até que o último suspiro se perca.</p>
-    <p>Hoje, o poço está coberto por pedras, mas viajantes contam que ainda se ouvem sussurros femininos à noite:  
-    <em>“Você me deixaria no escuro também?”</em></p>
-    <button onclick="startAR()">Iniciar AR</button>
+    <div class="content">
+      <h1>A Noiva do Poço</h1>
+      <p>Séculos atrás, uma jovem chamada Elira foi prometida em casamento a um homem cruel e poderoso, contra sua vontade. Na véspera da cerimônia, ela tentou fugir, mas foi capturada e levada de volta. Como punição, foi amarrada com seu vestido de noiva e lançada viva dentro de um poço profundo.</p>
+      <p>A água gelada sufocou seus gritos, mas sua fúria não morreu com ela. Dizem que, em noites silenciosas, o som de correntes arrastando ecoa do fundo do poço, e a figura de uma mulher surge, flutuando, com o vestido rasgado e encharcado, os cabelos desgrenhados e a pele cinzenta.</p>
+      <p>Elira não busca apenas vingança contra quem a matou — ela arrasta qualquer um que se aproxime do poço para o fundo, onde suas mãos frias seguram até que o último suspiro se perca.</p>
+      <p>Hoje, o poço está coberto por pedras, mas viajantes contam que ainda se ouvem sussurros femininos à noite:<br>
+      <em>“Você me deixaria no escuro também?”</em></p>
+      <button onclick="startAR()">Iniciar AR</button>
+    </div>
   </div>
 
   <!-- Cena AR -->
@@ -110,7 +119,7 @@
         gltf-model="https://juliamaciels.github.io/oito-portas/noiva1/modelos/noiva1.glb"
         scale="200 200 200"
         position="0 0 -400"
-        rotation="0 0 0"
+        rotation="0 90 0"
       >
       </a-entity>
     </a-nft>
