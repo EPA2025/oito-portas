@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>O Estopista - AR</title>
+
+  <!-- Scripts AR.js -->
+  <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Caixa de história */
+    .arjs-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 90%;
+      max-width: 500px;
+      height: 80%;
+      max-height: 600px;
+      margin: auto;
+      top: 10%;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: justify;
+      font-size: 1em;
+      overflow-y: auto;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Botão */
+    #startBtn {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      background-color: #ff3366;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Caixa com a história e botão -->
+  <div class="arjs-loader" id="loadingText">
+    <div>
+      <strong>O Estopista – A Morada do Silêncio</strong><br><br>
+      No coração de uma cidade esquecida havia uma casa amaldiçoada, chamada “A Morada do Silêncio”, evitada por todos devido à presença de um fantasma costurado de restos humanos, conhecido como O Estopista.<br><br>
+      Sua pele parecia tecido queimado encharcado de sangue seco, os olhos eram buracos famintos, e seus braços longos demais arrastavam-se como se buscassem vítimas. Ele surgia apenas nas noites sem lua, trazendo consigo um frio cortante e um cheiro metálico de ferro queimado.<br><br>
+      Um jovem curioso entrou certa vez na casa e encontrou O Estopista parado no fim do corredor. Cada passo da criatura fazia o ar tremer, enquanto um sussurro macabro ecoava: “Você veio… mas nunca sairá…”.<br><br>
+      O rapaz tentou fugir, mas os corredores se distorceram, transformando-se em um labirinto infinito. O fantasma não corria — apenas aparecia sempre à frente, observando, cercado por sombras vivas. Na manhã seguinte, só restaram manchas escuras no chão e o som distante de passos no vento.<br><br>
+      O jovem nunca mais foi visto. Desde então, a lenda diz que se alguém encarar os cantos mais escuros da própria casa à meia-noite, pode encontrar o vulto do Estopista, parado, esperando silenciosamente… para levar sua próxima alma à Morada do Silêncio.
+    </div>
+    <button id="startBtn">Abrir Câmera</button>
+  </div>
+
+  <!-- Cena AR -->
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; autoStart: false;"
+  >
+    <!-- Marcador NFT -->
+    <a-nft
+      type="nft"
+      url="https://juliamaciels.github.io/oito-portas/estopista/marcadores/estopista"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+    >
+      <!-- Wrapper para posição e escala -->
+      <a-entity id="modelWrapper" position="0 -100 -900">
+        <a-entity
+          id="estopistaModel"
+          gltf-model="https://juliamaciels.github.io/oito-portas/estopista/modelos/estopista.glb"
+          scale="300 300 300"
+          rotation="0 -90 0">
+        </a-entity>
+      </a-entity>
+    </a-nft>
+
+    <!-- Câmera -->
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    const btn = document.getElementById('startBtn');
+    const loader = document.getElementById('loadingText');
+    const scene = document.querySelector('a-scene');
+
+    btn.addEventListener('click', () => {
+      loader.style.display = 'none';
+      scene.systems["arjs"].arToolkitSource.domElement.play();
+    });
+  </script>
+</body>
+</html>
