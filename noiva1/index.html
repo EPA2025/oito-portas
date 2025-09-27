@@ -2,109 +2,81 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Noiva 1 - AR</title>
+  <title>Noiva do Poço - AR</title>
 
-  <!-- Scripts AR.js -->
+  <!-- Scripts do AR.js -->
   <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
-  <!-- Loader e estilos -->
   <style>
-    .arjs-loader {
-      height: 100%;
+    body, html {
+      margin: 0;
+      padding: 0;
       width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Caixa de história */
+    .arjs-loader {
       position: absolute;
       top: 0;
       left: 0;
-      background-color: rgba(0, 0, 0, 0.8);
+      width: 90%;
+      max-width: 500px;
+      height: 80%;
+      max-height: 600px;
+      margin: auto;
+      top: 10%;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: justify;
+      font-size: 1em;
+      overflow-y: auto;
       z-index: 9999;
       display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-    .arjs-loader div {
-      text-align: center;
-      font-size: 1.25em;
-      color: white;
+      flex-direction: column;
+      justify-content: space-between;
     }
 
-    /* Tela de introdução */
-    #intro {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: black;
-      color: white;
-      z-index: 10000;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: "Georgia", serif;
-    }
-
-    #intro .content {
-      width: 85%;             /* um pouco menor no celular */
-      max-width: 600px;       /* limite em desktop */
-      background: rgba(20, 20, 20, 0.95);
-      padding: 20px;
-      border: 2px solid crimson;
-      border-radius: 12px;
-      text-align: center;
-      line-height: 1.5;
-      font-size: 0.95em;      /* texto mais compacto */
-    }
-
-    #intro h1 {
-      font-size: 1.6em;
-      margin-bottom: 15px;
-      color: crimson;
-    }
-
-    #intro p {
-      margin-bottom: 12px;
-    }
-
-    #intro button {
-      margin-top: 15px;
-      padding: 10px 20px;
+    /* Botão */
+    #startBtn {
+      margin-top: 20px;
+      padding: 12px 20px;
       font-size: 1em;
-      background: crimson;
-      color: white;
       border: none;
-      border-radius: 8px;
+      border-radius: 5px;
+      background-color: #ff3366;
+      color: white;
       cursor: pointer;
-    }
-
-    #intro button:hover {
-      background: darkred;
     }
   </style>
 </head>
-<body style="margin: 0; overflow: hidden;">
-  <!-- Tela de introdução -->
-  <div id="intro">
-    <div class="content">
-      <h1>A Noiva do Poço</h1>
-      <p>Séculos atrás, uma jovem chamada Elira foi prometida em casamento a um homem cruel e poderoso, contra sua vontade. Na véspera da cerimônia, ela tentou fugir, mas foi capturada e levada de volta. Como punição, foi amarrada com seu vestido de noiva e lançada viva dentro de um poço profundo.</p>
-      <p>A água gelada sufocou seus gritos, mas sua fúria não morreu com ela. Dizem que, em noites silenciosas, o som de correntes arrastando ecoa do fundo do poço, e a figura de uma mulher surge, flutuando, com o vestido rasgado e encharcado, os cabelos desgrenhados e a pele cinzenta.</p>
-      <p>Elira não busca apenas vingança contra quem a matou — ela arrasta qualquer um que se aproxime do poço para o fundo, onde suas mãos frias seguram até que o último suspiro se perca.</p>
-      <p>Hoje, o poço está coberto por pedras, mas viajantes contam que ainda se ouvem sussurros femininos à noite:<br>
-      <em>“Você me deixaria no escuro também?”</em></p>
-      <button onclick="startAR()">Iniciar AR</button>
+<body>
+  <!-- Caixa com a história e botão -->
+  <div class="arjs-loader" id="loadingText">
+    <div>
+      <strong>A Noiva do Poço</strong><br><br>
+      Séculos atrás, uma jovem chamada Elira foi prometida em casamento a um homem cruel e poderoso, contra sua vontade. Na véspera da cerimônia, ela tentou fugir, mas foi capturada e levada de volta. Como punição, foi amarrada com seu vestido de noiva e lançada viva dentro de um poço profundo.<br><br>
+      A água gelada sufocou seus gritos, mas sua fúria não morreu com ela. Dizem que, em noites silenciosas, o som de correntes arrastando ecoa do fundo do poço, e a figura de uma mulher surge, flutuando, com o vestido rasgado e encharcado, os cabelos desgrenhados e a pele cinzenta.<br><br>
+      Elira não busca apenas vingança contra quem a matou — ela arrasta qualquer um que se aproxime do poço para o fundo, onde suas mãos frias seguram até que o último suspiro se perca.<br><br>
+      Hoje, o poço está coberto por pedras, mas viajantes contam que ainda se ouvem sussurros femininos à noite:<br>
+      <em>“Você me deixaria no escuro também?”</em>
     </div>
+    <button id="startBtn">Abrir Câmera</button>
   </div>
 
   <!-- Cena AR -->
   <a-scene
-    id="scene"
-    style="display:none;"
     vr-mode-ui="enabled: false;"
     renderer="logarithmicDepthBuffer: true;"
     embedded
-    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; autoStart: false;"
   >
     <!-- Marcador NFT -->
     <a-nft
@@ -119,7 +91,7 @@
       <a-entity
         gltf-model="https://juliamaciels.github.io/oito-portas/noiva1/modelos/noiva1.glb"
         scale="200 200 200"
-        position="0 0 -400"
+        position="0 0 -500"
         rotation="0 -90 0"
       >
       </a-entity>
@@ -130,10 +102,14 @@
   </a-scene>
 
   <script>
-    function startAR() {
-      document.getElementById("intro").style.display = "none";
-      document.getElementById("scene").style.display = "block";
-    }
+    const btn = document.getElementById('startBtn');
+    const loader = document.getElementById('loadingText');
+    const scene = document.querySelector('a-scene');
+
+    btn.addEventListener('click', () => {
+      loader.style.display = 'none';
+      scene.systems["arjs"].arToolkitSource.domElement.play();
+    });
   </script>
 </body>
 </html>
