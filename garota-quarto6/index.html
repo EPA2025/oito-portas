@@ -2,85 +2,103 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>EPA - AR Ghost</title>
+  <title>Garota do Quarto 6 - AR</title>
 
-  <!-- Scripts do AR.js -->
+  <!-- Scripts AR.js -->
   <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
+  <!-- Loader -->
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-      height: 100%;
-      overflow: hidden;
-      font-family: Arial, sans-serif;
-    }
-
-    /* Caixa de história */
     .arjs-loader {
+      height: 100%;
+      width: 100%;
       position: absolute;
       top: 0;
       left: 0;
-      width: 90%;
-      max-width: 500px;
-      height: 80%;
-      max-height: 600px;
-      margin: auto;
-      top: 10%;
-      right: 0;
-      bottom: 0;
-      background-color: rgba(0, 0, 0, 0.85);
-      color: white;
-      padding: 20px;
-      border-radius: 10px;
-      text-align: justify;
-      font-size: 1em;
-      overflow-y: auto;
+      background-color: rgba(0, 0, 0, 0.8);
       z-index: 9999;
       display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      justify-content: center;
+      align-items: center;
+    }
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
     }
 
-    /* Botão */
-    #startBtn {
-      margin-top: 20px;
-      padding: 12px 20px;
-      font-size: 1em;
-      border: none;
-      border-radius: 5px;
-      background-color: #ff3366;
+    /* Tela de introdução */
+    #intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
       color: white;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      font-family: "Georgia", serif;
+      line-height: 1.6;
+      overflow-y: auto;
+    }
+
+    #intro h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #intro p {
+      max-width: 700px;
+      margin-bottom: 15px;
+    }
+
+    #intro button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1em;
+      background: darkred;
+      color: white;
+      border: none;
+      border-radius: 8px;
       cursor: pointer;
+    }
+
+    #intro button:hover {
+      background: crimson;
     }
   </style>
 </head>
-<body>
-  <!-- Caixa com a história e botão -->
-  <div class="arjs-loader" id="loadingText">
-    <div>
-      <strong>A Garota do Quarto 6</strong><br><br>
-      Nos anos 70, em um hospital psiquiátrico isolado, havia uma jovem chamada Marian, internada contra sua vontade após denunciar abusos de sua própria família. Ninguém acreditou nela — disseram que estava delirando.<br><br>
-      No hospital, Marian foi submetida a choques, medicações forçadas e sessões violentas de contenção. O quarto onde ela ficava, o quarto 6, tinha as paredes marcadas por arranhões e frases escritas com sangue. Um dia, após um "tratamento" experimental, os enfermeiros a encontraram morta, o corpo contorcido e os olhos arregalados de puro terror.<br><br>
-      O hospital foi fechado anos depois, mas testemunhas juram que Marian nunca saiu. Ela aparece com a pele azulada, o corpo retorcido e os cabelos caindo sobre o rosto, vestida apenas com a camisola do hospício. Seus olhos vazios seguem quem ousa entrar, e quem a encara por muito tempo sente uma dor aguda na cabeça, como se o choque elétrico ainda queimasse dentro do crânio.<br><br>
-      Alguns dizem que seu fantasma não mata de imediato: ela faz a vítima reviver, noite após noite, os mesmos tormentos que sofreu, até que a sanidade se desfaz por completo.
-    </div>
-    <button id="startBtn">Abrir Câmera</button>
+<body style="margin: 0; overflow: hidden;">
+  <!-- Tela de introdução -->
+  <div id="intro">
+    <h1>A Garota do Quarto 6</h1>
+    <p>Nos anos 70, em um hospital psiquiátrico isolado, havia uma jovem chamada Marian, internada contra sua vontade após denunciar abusos de sua própria família. Ninguém acreditou nela — disseram que estava delirando.</p>
+    <p>No hospital, Marian foi submetida a choques, medicações forçadas e sessões violentas de contenção. O quarto onde ela ficava, o quarto 6, tinha as paredes marcadas por arranhões e frases escritas com sangue. Um dia, após um "tratamento" experimental, os enfermeiros a encontraram morta, o corpo contorcido e os olhos arregalados de puro terror.</p>
+    <p>O hospital foi fechado anos depois, mas testemunhas juram que Marian nunca saiu. Ela aparece com a pele azulada, o corpo retorcido e os cabelos caindo sobre o rosto, vestida apenas com a camisola do hospício. Seus olhos vazios seguem quem ousa entrar, e quem a encara por muito tempo sente uma dor aguda na cabeça, como se o choque elétrico ainda queimasse dentro do crânio.</p>
+    <p>Alguns dizem que seu fantasma não mata de imediato: ela faz a vítima reviver, noite após noite, os mesmos tormentos que sofreu, até que a sanidade se desfaz por completo.</p>
+    <button onclick="startAR()">Iniciar AR</button>
   </div>
 
   <!-- Cena AR -->
   <a-scene
+    id="scene"
+    style="display:none;"
     vr-mode-ui="enabled: false;"
     renderer="logarithmicDepthBuffer: true;"
     embedded
-    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; autoStart: false;"
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
   >
     <!-- Marcador NFT -->
     <a-nft
       type="nft"
-      url="https://juliamaciels.github.io/oito-portas/garota6/marcadores/garota-quarto6"
+      url="https://juliamaciels.github.io/oito-portas/garota-quarto6/marcadores/garota-quarto6"
       smooth="true"
       smoothCount="10"
       smoothTolerance=".01"
@@ -88,10 +106,10 @@
     >
       <!-- Modelo 3D -->
       <a-entity
-        gltf-model="https://juliamaciels.github.io/oito-portas/garota6/modelos/garota-quarto6.glb"
-        scale="200 200 200"
-        position="0 0 -500"
-        rotation="0 180 0"
+        gltf-model="https://juliamaciels.github.io/oito-portas/garota-quarto6/modelos/garota-quarto6.glb"
+        scale="40 40 40"
+        position="0 0 -300"
+        rotation="0 0 0"
       >
       </a-entity>
     </a-nft>
@@ -101,14 +119,10 @@
   </a-scene>
 
   <script>
-    const btn = document.getElementById('startBtn');
-    const loader = document.getElementById('loadingText');
-    const scene = document.querySelector('a-scene');
-
-    btn.addEventListener('click', () => {
-      loader.style.display = 'none';
-      scene.systems["arjs"].arToolkitSource.domElement.play();
-    });
+    function startAR() {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("scene").style.display = "block";
+    }
   </script>
 </body>
 </html>
