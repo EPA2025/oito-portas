@@ -9,6 +9,25 @@
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
   <style>
+    /* Loader */
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0; left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
+    }
+
+    /* Tela de introdução */
     #intro {
       position: fixed;
       top: 0; left: 0;
@@ -17,12 +36,17 @@
       z-index: 10000;
       display: flex; flex-direction: column;
       justify-content: center; align-items: center;
-      text-align: center; font-family: Georgia, serif;
-      padding: 20px;
+      padding: 20px; text-align: center;
+      font-family: "Georgia", serif;
+      line-height: 1.6;
+      overflow-y: auto;
     }
-    #intro h1 { margin-bottom: 20px; }
+    #intro h1 { font-size: 2em; margin-bottom: 20px; }
+    #intro p { max-width: 700px; margin-bottom: 15px; }
     #intro button {
-      margin-top: 20px; padding: 12px 24px;
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1em;
       background: darkred; color: white;
       border: none; border-radius: 8px;
       cursor: pointer;
@@ -31,10 +55,11 @@
   </style>
 </head>
 <body style="margin:0; overflow:hidden;">
-  <!-- Intro -->
+  <!-- Tela de introdução -->
   <div id="intro">
     <h1>A Garota do Quarto 6</h1>
-    <p>História de terror aqui...</p>
+    <p>Nos anos 70, em um hospital psiquiátrico isolado, havia uma jovem chamada Marian...</p>
+    <p>O hospital foi fechado anos depois, mas testemunhas juram que Marian nunca saiu...</p>
     <button onclick="startAR()">Iniciar AR</button>
   </div>
 
@@ -42,22 +67,26 @@
   <a-scene
     id="scene"
     style="display:none;"
-    embedded
     vr-mode-ui="enabled: false;"
     renderer="logarithmicDepthBuffer: true;"
+    embedded
     arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
   >
-    <!-- Marcador -->
+    <!-- Marcador NFT -->
     <a-nft
-      id="marker"
       type="nft"
       url="https://juliamaciels.github.io/oito-portas/garota-quarto6/marcadores/garota-quarto6"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
     >
+      <!-- Modelo 3D -->
       <a-entity
-        id="modelo"
         gltf-model="https://juliamaciels.github.io/oito-portas/garota-quarto6/modelos/garota-quarto6.glb"
         scale="1 1 1"
         position="0 0 0"
+        rotation="0 180 0"
       ></a-entity>
     </a-nft>
 
@@ -70,40 +99,6 @@
       document.getElementById("intro").style.display = "none";
       document.getElementById("scene").style.display = "block";
     }
-
-    const marker = document.getElementById("marker");
-    const modelo = document.getElementById("modelo");
-    const scene = document.getElementById("scene");
-    let fixado = false;
-
-    // Garante que o modelo carregou antes
-    modelo.addEventListener("model-loaded", () => {
-      console.log("Modelo 3D carregado.");
-
-      marker.addEventListener("markerFound", () => {
-        if (fixado) return;
-
-        console.log("Marcador detectado!");
-
-        // Pega posição/rotação mundial do modelo
-        const pos = modelo.object3D.getWorldPosition(new THREE.Vector3());
-        const rot = modelo.object3D.getWorldRotation(new THREE.Euler());
-
-        // Cria clone
-        const clone = document.createElement("a-entity");
-        clone.setAttribute("gltf-model", modelo.getAttribute("gltf-model"));
-        clone.setAttribute("scale", "4 4 4"); // aumenta
-        clone.setAttribute("position", `${pos.x} ${pos.y} ${pos.z}`);
-        clone.setAttribute("rotation",
-          `${THREE.MathUtils.radToDeg(rot.x)} ${THREE.MathUtils.radToDeg(rot.y)} ${THREE.MathUtils.radToDeg(rot.z)}`);
-
-        // Adiciona na cena
-        scene.appendChild(clone);
-
-        fixado = true;
-        console.log("Clone fixado no espaço!");
-      });
-    });
   </script>
 </body>
 </html>
