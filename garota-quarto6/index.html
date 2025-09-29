@@ -8,7 +8,7 @@
   <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
   <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
 
-  <!-- Loader -->
+  <!-- Loader e estilo -->
   <style>
     .arjs-loader {
       height: 100%;
@@ -97,6 +97,7 @@
   >
     <!-- Marcador NFT -->
     <a-nft
+      id="marker"
       type="nft"
       url="https://juliamaciels.github.io/oito-portas/garota-quarto6/marcadores/garota-quarto6"
       smooth="true"
@@ -104,14 +105,14 @@
       smoothTolerance=".01"
       smoothThreshold="5"
     >
-      <!-- Modelo 3D -->
+      <!-- Modelo dentro do marcador -->
       <a-entity
+        id="modelo"
         gltf-model="https://juliamaciels.github.io/oito-portas/garota-quarto6/modelos/garota-quarto6.glb"
-        scale="200 200 200"
-        position="0 0 -50"
+        scale="2 2 2"
+        position="0 0 0"
         rotation="0 0 0"
-      >
-      </a-entity>
+      ></a-entity>
     </a-nft>
 
     <!-- Câmera -->
@@ -123,6 +124,31 @@
       document.getElementById("intro").style.display = "none";
       document.getElementById("scene").style.display = "block";
     }
+
+    const marker = document.getElementById("marker");
+    const modelo = document.getElementById("modelo");
+    const scene = document.getElementById("scene");
+
+    marker.addEventListener("markerFound", () => {
+      console.log("Marcador detectado!");
+
+      // Espera 1 segundo para garantir posição e rotação
+      setTimeout(() => {
+        const pos = modelo.object3D.getWorldPosition(new THREE.Vector3());
+        const rot = modelo.object3D.getWorldRotation(new THREE.Euler());
+
+        // Remove do marcador
+        marker.remove(modelo);
+
+        // Reposiciona fixo na cena
+        modelo.setAttribute("position", `${pos.x} ${pos.y} ${pos.z}`);
+        modelo.setAttribute("rotation", `${THREE.MathUtils.radToDeg(rot.x)} ${THREE.MathUtils.radToDeg(rot.y)} ${THREE.MathUtils.radToDeg(rot.z)}`);
+
+        scene.appendChild(modelo);
+
+        console.log("Modelo fixado no espaço!");
+      }, 1000);
+    });
   </script>
 </body>
 </html>
