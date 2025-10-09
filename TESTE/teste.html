@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Garota do Quarto 6 - AR</title>
+
+  <!-- Scripts AR.js -->
+  <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+  <!-- Loader -->
+  <style>
+    .arjs-loader {
+      height: 100%;
+      width: 100%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 9999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .arjs-loader div {
+      text-align: center;
+      font-size: 1.25em;
+      color: white;
+    }
+
+    /* Tela de introdução */
+    #intro {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: black;
+      color: white;
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      text-align: center;
+      font-family: "Georgia", serif;
+      line-height: 1.6;
+      overflow-y: auto;
+    }
+
+    #intro h1 {
+      font-size: 2em;
+      margin-bottom: 20px;
+    }
+
+    #intro p {
+      max-width: 700px;
+      margin-bottom: 15px;
+    }
+
+    #intro button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1em;
+      background: darkred;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #intro button:hover {
+      background: crimson;
+    }
+  </style>
+</head>
+<body style="margin: 0; overflow: hidden;">
+  <!-- Tela de introdução -->
+  <div id="intro">
+    <h1>A Garota do Quarto 6</h1>
+    <p>Nos anos 70, em um hospital psiquiátrico isolado, havia uma jovem chamada Marian, internada contra sua vontade após denunciar abusos de sua própria família. Ninguém acreditou nela — disseram que estava delirando.</p>
+    <p>No hospital, Marian foi submetida a choques, medicações forçadas e sessões violentas de contenção. O quarto onde ela ficava, o quarto 6, tinha as paredes marcadas por arranhões e frases escritas com sangue. Um dia, após um "tratamento" experimental, os enfermeiros a encontraram morta, o corpo contorcido e os olhos arregalados de puro terror.</p>
+    <p>O hospital foi fechado anos depois, mas testemunhas juram que Marian nunca saiu. Ela aparece com a pele azulada, o corpo retorcido e os cabelos caindo sobre o rosto, vestida apenas com a camisola do hospício. Seus olhos vazios seguem quem ousa entrar, e quem a encara por muito tempo sente uma dor aguda na cabeça, como se o choque elétrico ainda queimasse dentro do crânio.</p>
+    <p>Alguns dizem que seu fantasma não mata de imediato: ela faz a vítima reviver, noite após noite, os mesmos tormentos que sofreu, até que a sanidade se desfaz por completo.</p>
+    <button onclick="startAR()">Iniciar AR</button>
+  </div>
+
+  <!-- Cena AR -->
+  <a-scene
+    id="scene"
+    style="display:none;"
+    vr-mode-ui="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false;"
+  >
+    <!-- Marcador NFT -->
+    <a-nft
+      type="nft"
+      url="https://juliamaciels.github.io/oito-portas/TESTE/marcadores/janela"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+    >
+      <!-- Modelo 3D -->
+      <a-entity
+        gltf-model="https://juliamaciels.github.io/oito-portas/garota-quarto6/modelos/garota-quarto6.glb"
+        scale="150 150 150"
+        position="0 0 -350"
+        rotation="0 0 0"
+      >
+      </a-entity>
+    </a-nft>
+
+    <!-- Câmera -->
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    function startAR() {
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("scene").style.display = "block";
+    }
+  </script>
+</body>
+</html>
