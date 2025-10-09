@@ -101,24 +101,18 @@
     <a-entity camera></a-entity>
   </a-scene>
 
+  
   <script>
     const btn = document.getElementById('startBtn');
     const loader = document.getElementById('loadingText');
     const scene = document.querySelector('a-scene');
 
     btn.addEventListener('click', () => {
-      // Esconde a caixa de história
       loader.style.display = 'none';
-
-      // Inicializa manualmente o AR.js
-      const arjsSystem = scene.systems['arjs'];
-      arjsSystem.arToolkitSource.init(() => {
-        arjsSystem.arToolkitContext.init(() => {
-          // AR pronto para rastrear
-          console.log('AR iniciado!');
-        });
-      });
+      scene.systems["arjs"].arToolkitSource.domElement.play();
     });
   </script>
+
+
 </body>
 </html>

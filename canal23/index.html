@@ -107,12 +107,10 @@
     const scene = document.querySelector('a-scene');
 
     btn.addEventListener('click', () => {
-      // Esconde a caixa de história
       loader.style.display = 'none';
-
-      // Inicializa a câmera AR
       scene.systems["arjs"].arToolkitSource.domElement.play();
     });
   </script>
+  
 </body>
 </html>
