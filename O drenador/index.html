@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>O Drenador</title>
+
+  <!-- Scripts do AR.js -->
+  <script src="https://cdn.jsdelivr.net/gh/aframevr/aframe@1c2407b26c61958baa93967b5412487cd94b290b/dist/aframe-master.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    /* Caixa de história */
+    .arjs-loader {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 90%;
+      max-width: 500px;
+      height: 80%;
+      max-height: 600px;
+      margin: auto;
+      top: 10%;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: justify;
+      font-size: 1em;
+      overflow-y: auto;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    /* Botão */
+    #startBtn {
+      margin-top: 20px;
+      padding: 12px 20px;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      background-color: #ff3366;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <!-- Caixa com a história e botão -->
+  <div class="arjs-loader" id="loadingText">
+    <div>
+      <strong>O Drenador</strong><br><br>
+     <p>JOGO SUJO, o palhaço em trajes de penas e cartas, não é um matador, mas um mestre da crueldade psicológica. Ele surge no ápice de um pacto de confiança para revelar a verdade mais destrutiva.
+
+        Ele toca o futuro traidor.
+        
+        A vítima, a pessoa que será destruída, tem um vislumbre fugaz: o rosto amado é substituído pela face macabra de JOGO SUJO, um sorriso fixo de ódio em lugar da afeição. A visão é a promessa da traição.
+        
+        O palhaço desaparece, mas o terror permanece. A vítima agora sabe. Condenada, é forçada a conviver, a sorrir e a amar o seu carrasco, esperando pelo dia inevitável em que a confiança será aniquilada.
+        
+        JOGO SUJO não mata o corpo; ele assassina a inocência e colhe a agonia da espera. Ele é a certeza de que a pessoa que você mais ama será a que o destruirá.</p>
+    </div>
+    <button id="startBtn">Abrir Câmera</button>
+  </div>
+
+  <!-- Cena AR -->
+  <a-scene
+    vr-mode-ui="enabled: false;"
+    renderer="logarithmicDepthBuffer: true;"
+    embedded
+    arjs="trackingMethod: best; sourceType: webcam; debugUIEnabled: false; autoStart: false;"
+  >
+    <!-- Marcador NFT -->
+    <a-nft
+      type="nft"
+      url="https://juliamaciels.github.io/oito-portas/noiva1/marcadores/drenador"
+      smooth="true"
+      smoothCount="10"
+      smoothTolerance=".01"
+      smoothThreshold="5"
+    >
+      <!-- Modelo 3D -->
+      <a-entity
+        gltf-model="https://juliamaciels.github.io/oito-portas/noiva1/modelos/drenador.glb"
+        scale="200 200 200"
+        position="0 0 -300"
+        rotation="0 -90 0"
+      >
+      </a-entity>
+    </a-nft>
+
+    <!-- Câmera -->
+    <a-entity camera></a-entity>
+  </a-scene>
+
+  <script>
+    const btn = document.getElementById('startBtn');
+    const loader = document.getElementById('loadingText');
+    const scene = document.querySelector('a-scene');
+
+    btn.addEventListener('click', () => {
+      loader.style.display = 'none';
+      scene.systems["arjs"].arToolkitSource.domElement.play();
+    });
+  </script>
+</body>
+</html>
