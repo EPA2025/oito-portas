@@ -107,17 +107,25 @@
     const btn = document.getElementById('startBtn');
     const loader = document.getElementById('loadingText');
     const scene = document.querySelector('a-scene');
-
-    scene.renderer = null;
-
-
-    btn.addEventListener('click', () => {
-      // Esconde a caixa de história
-      loader.style.display = 'none';
-
-      // Inicializa a câmera AR
-      scene.systems["arjs"].arToolkitSource.domElement.play();
+  
+    scene.setAttribute('arjs', 'trackingMethod: best; sourceType: webcam; debugUIEnabled: false; autoStart: false;');
+    scene.pause();
+  
+    btn.addEventListener('click', async () => {
+      try {
+        loader.style.display = 'none';
+        await navigator.mediaDevices.getUserMedia({ video: true });
+        scene.play();
+  
+        const arSystem = scene.systems["arjs"];
+        if (arSystem && arSystem.arToolkitSource) {
+          arSystem.arToolkitSource.start();
+        }
+      } catch (err) {
+        alert("Permissão da câmera negada ou erro ao iniciar AR.");
+      }
     });
   </script>
+  
 </body>
 </html>
