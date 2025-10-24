@@ -108,6 +108,9 @@
     const loader = document.getElementById('loadingText');
     const scene = document.querySelector('a-scene');
 
+    scene.renderer = null;
+
+
     btn.addEventListener('click', () => {
       // Esconde a caixa de história
       loader.style.display = 'none';
